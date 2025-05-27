@@ -18,12 +18,25 @@ const token    = ''; // facultatif
 
 async function fetchEvents() {
   try {
-    const path = 'infos/event.json'; // <-- nouveau chemin
-    const response = await fetch(path);
+    const path = 'event.json';
+    const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/${encodeURIComponent(path)}`;
+
+    const response = await fetch(apiUrl, {
+      headers: {
+        Accept: 'application/vnd.github.v3+json'
+      }
+    });
+
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const data = await response.json();
+
+    const file = await response.json();
+    const content = atob(file.content);
+    const data = JSON.parse(content);
+
     allEvents = Array.isArray(data.event) ? data.event : [];
+
     renderEverything();
+
   } catch (err) {
     console.error('Erreur chargement events', err);
     calendarContainer.innerHTML = '<p class="error">Erreur de chargement des événements</p>';
@@ -93,11 +106,11 @@ function renderCalendar() {
       popup.style.zIndex = '9999';
 
       const title = document.createElement('h4');
-      title.textContent = matched[0].nom;
+      title.textContent = matched[0].nom; // ← ← ← TITRE AJOUTÉ ICI
       popup.appendChild(title);
 
       const image = document.createElement('img');
-      image.src = matched[0].image ? `infos/image/${matched[0].image}` : '';
+      image.src = matched[0].image;
       image.style.width = '100px';
       image.style.height = 'auto';
       image.style.borderRadius = '4px';
@@ -188,7 +201,7 @@ function Events() {
       desc.style.margin = '0';
 
       const image = document.createElement('img');
-      image.src = event.image ? `infos/image/${event.image}` : '';
+      image.src = event.image;
       image.alt = event.nom;
       image.style.maxWidth = '100%';
       image.style.borderRadius = '6px';

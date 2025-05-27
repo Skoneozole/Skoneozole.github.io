@@ -9,7 +9,7 @@
             "tarif": "5",
             "site": "non",
             "ville": "Paris",
-            "distance": "1h30",
+            "duréemax": "1h30",
             "conta1": "oui",
             "conta2": "non",
             "conta3": "oui",

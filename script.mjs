@@ -33,10 +33,21 @@ function toggleSidebar() {
 
 async function fetchtest(path) {
   try {
-    // On charge désormais depuis le dossier 'infos'
-    const response = await fetch(`infos/${path}`);
+    const username = 'Skoneozole';
+    const repo     = 'testUwULamas';
+    const apiUrl   = `https://api.github.com/repos/${username}/${repo}/contents/${encodeURIComponent(path)}`;
+
+    const response = await fetch(apiUrl, {
+      headers: {
+        Accept: 'application/vnd.github.v3+json'
+      }
+    });
+
     if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-    return await response.json();
+
+    const file    = await response.json();
+    const content = atob(file.content);
+    return JSON.parse(content);
   } catch (error) {
     console.error('Error fetching data:', error);
     return {};
@@ -45,8 +56,10 @@ async function fetchtest(path) {
 
 function fetchEvents() {
   const isMobile = window.innerWidth <= 768;
+
   const scrollY = window.scrollY;
   contentDiv.innerHTML = '';
+
   fetchtest('event.json').then(data => {
     let monthGroups = isMobile
       ? [{ month: currentMonth, year: currentYear, events: [] }]
@@ -58,6 +71,7 @@ function fetchEvents() {
             events: []
           };
         });
+
     (data.event || []).forEach(event => {
       const d = new Date(event.date);
       monthGroups.forEach(group => {
@@ -66,36 +80,47 @@ function fetchEvents() {
         }
       });
     });
+
     const monthsContainer = document.createElement('div');
     monthsContainer.className = 'months-container';
+
     monthGroups.forEach(group => {
       const col = document.createElement('div');
       col.className = 'month-column';
+
       const title = document.createElement('h2');
       title.textContent = `${monthNames[group.month]} ${group.year}`;
       title.className = 'month-title';
       col.appendChild(title);
+
       const eventsContainer = document.createElement('div');
       eventsContainer.className = 'events-container';
+
       group.events.forEach(event => {
         const card = document.createElement('div');
         card.className = 'event-card';
         card.innerHTML = `
           <h3>${event.nom}</h3>
-          <img src="infos/image/${event.image}" alt="${event.nom}" loading="lazy">
+          <img src="${event.image}" alt="${event.nom}" loading="lazy">
           <p class="event-date">${new Date(event.date).toLocaleDateString('fr-FR')}</p>
           <p class="event-desc">${fixEncoding(event.desc || '')}</p>
         `;
+
+        // ✅ rendre toute la carte cliquable
         card.addEventListener('click', () => {
           window.open(RICKROLL, '_blank');
         });
+
         eventsContainer.appendChild(card);
       });
+
       col.appendChild(eventsContainer);
       monthsContainer.appendChild(col);
     });
+
     contentDiv.appendChild(monthsContainer);
     window.scrollTo({ top: scrollY, behavior: 'instant' });
+
   }).catch(error => {
     console.error('Error displaying events:', error);
     contentDiv.innerHTML = '<p class="error">Erreur de chargement des événements</p>';
