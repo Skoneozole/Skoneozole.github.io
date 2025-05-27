@@ -1,25 +1,18 @@
 {
     "event": [
         {
-            "nom": "eee",
-            "date": "2025-05-23",
-            "desc": "f",
-            "fulldesc": "g",
-            "image": "https://github.com/Skoneozole/testUwULamas/raw/main/image/e.png"
-        },
-        {
-            "nom": "test",
-            "date": "2025-05-29",
-            "desc": "test",
-            "fulldesc": "rfr",
-            "image": "https://github.com/Skoneozole/testUwULamas/raw/main/image/test.png"
-        },
-        {
-            "nom": "tres tres trees tres trees tres long titre oulala c pas une blgague c vraiment long comme titre",
+            "nom": "kys (keep yourself safe bebou)",
             "date": "2025-05-27",
-            "desc": "krfnjzvnjzlvnjfeznfklzenfklezfnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn",
-            "fulldesc": "krfnjzvnjzlvnjfeznfklzenfklezfnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\nkrfnjzvnjzlvnjfeznfklzenfklezfnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\nkrfnjzvnjzlvnjfeznfklzenfklezfnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\nkrfnjzvnjzlvnjfeznfklzenfklezfnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\nkrfnjzvnjzlvnjfeznfklzenfklezfnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\nkrfnjzvnjzlvnjfeznfklzenfklezfnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\nkrfnjzvnjzlvnjfeznfklzenfklezfnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn",
-            "image": "https://github.com/Skoneozole/testUwULamas/raw/main/image/tres_tres_trees_tres_trees_tres_long_titre_oulala_c_pas_une_blgague_c_vraiment_long_comme_titre.png"
+            "desc": "kys (kill yourself)",
+            "fulldesc": "dd",
+            "image": "https://github.com/Skoneozole/testUwULamas/raw/main/infos/image/kys_(keep_yourself_safe_bebou).png"
+        },
+        {
+            "nom": "fddeee",
+            "date": "2025-05-27",
+            "desc": "eee",
+            "fulldesc": "",
+            "image": "https://github.com/Skoneozole/testUwULamas/raw/main/infos/image/fddeee.png"
         }
     ]
 }
