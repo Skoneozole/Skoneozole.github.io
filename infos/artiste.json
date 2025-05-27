@@ -8,30 +8,14 @@
             "image": "https://github.com/Skoneozole/testUwULamas/raw/main/image/e.png",
             "tarif": "5",
             "site": "non",
-            "ville": "Paris",
-            "duréemax": "1h30",
+            "ville": "Ivry sur Seine",
+            "coordonnees": "48.789, 2.384",
+            "distance": "100",
             "conta1": "oui",
             "conta2": "non",
             "conta3": "oui",
             "conta4": "non",
             "conta5": "oui",
-            "conta6": "non"
-        },
-        {
-            "nom": "keke2",
-            "Nom de scene": "Skoneozole2",
-            "desc": "f2",
-            "fulldesc": "g2",
-            "image": "",
-            "tarif": "10",
-            "site": "oui",
-            "ville": "Lyon",
-            "duréemax": "2h",
-            "conta1": "non",
-            "conta2": "non",
-            "conta3": "non",
-            "conta4": "non",
-            "conta5": "non",
             "conta6": "non"
         }
     ]
