@@ -1,0 +1,21 @@
+{
+    "Artiste": [
+        {
+            "nom": "keke",
+            "Nom de scene": "Skoneozole",
+            "desc": "f",
+            "fulldesc": "g",
+            "image": "https://github.com/Skoneozole/testUwULamas/raw/main/image/e.png",
+            "tarif": "5",
+            "site": "non",
+            "ville": "Paris",
+            "duréemax": "1h30",
+            "conta1": "oui",
+            "conta2": "non",
+            "conta3": "oui",
+            "conta4": "non",
+            "conta5": "oui",
+            "conta6": "non"
+        }
+    ]
+}

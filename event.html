@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Calendrier Événements</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="calendrier.mjs" defer></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <a href="index.html" class="header-logo-link">
+      <img src="logo.png" alt="Logo Écolo Monde" class="header-logo">
+    </a>
+    <div class="header-content">
+      <div class="header-text">
+        <h2>alcolo monde</h2>
+        <p>Agir aujourd'hui pour boire demain</p>
+      </div>
+      <div class="header-buttons">
+        <a href="index.html"    class="header-btn">HOME</a>
+        <a href="info.html"     class="header-btn">INFO CONTACT</a>
+        <a href="contact.html"  class="header-btn">CONTACT DIRECT</a>
+        <a href="Artistes.html"     class="header-btn">ARTISTES</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Barre latérale -->
+  <nav class="sidebar" id="sidebar">
+    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+    <ul class="menu">
+      <li><a href="event.html"   class="menu-item"><span class="menu-icon">📅</span><span class="menu-label">Calendrier Événements</span></a></li>
+      <li><a href="actions.html" class="menu-item"><span class="menu-icon">🎉</span><span class="menu-label">Événements passés</span></a></li>
+      <li><a href="galerie.html" class="menu-item"><span class="menu-icon">📸</span><span class="menu-label">Galerie</span></a></li>
+    </ul>
+  </nav>
+
+  <main class="content" id="content">
+    <a href="#eventfuture" class="event-btn">Aller directement aux événements prochains</a>
+
+    <div class="calendar-wrapper">
+      <button class="button1" onclick="mois(-1)">&lt; Mois précédent</button>
+      <div class="months-container" id="months-container"></div>
+      <button class="button2" onclick="mois(1)">Mois Suivant &gt;</button>
+    </div>
+
+    <div class="content-body">
+      <!-- Calendrier affiché ici -->
+      <div id="calendar-container"></div>
+
+      <!-- Section événements (injectée dynamiquement) -->
+      <div id="eventfuture"></div>
+
+    </div>
+  </main>
+</body>
+</html>

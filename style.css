@@ -1,0 +1,338 @@
+/* -------------------- RESET & BASE -------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Arial', sans-serif;
+    background: #f8f9fa;
+}
+html {
+  scroll-behavior: smooth;
+}
+#evenements {
+  scroll-margin-top: 160px; /* hauteur du header + un petit espace */
+}
+#eventfuture {
+  scroll-margin-top: 160px; /* hauteur du header + un petit espace */
+}
+
+.event-btn{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+}
+/* -------------------- HEADER -------------------- */
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 140px;
+    background: #2c3e50;
+    color: white;
+    padding: 15px 30px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+.header-logo {
+    height: 90px;
+    width: auto;
+    border-radius: 8px;
+}
+.header-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+.header-text h2 {
+    font-size: 1.8em;
+    margin-bottom: 5px;
+    color: #2ecc71;
+}
+.header-text p {
+    font-size: 0.95em;
+    opacity: 0.9;
+}
+.header-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+}
+.header-btn {
+    padding: 8px 25px;
+    background: #27ae60;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: bold;
+}
+.header-btn:hover {
+    background: #219a52;
+    transform: translateY(-2px);
+}
+
+/* -------------------- SIDEBAR -------------------- */
+.sidebar {
+    position: fixed;
+    top: 140px;
+    left: 0;
+    width: 250px;
+    height: calc(100vh - 140px);
+    background: #34495e;
+    transition: width 0.3s ease;
+    z-index: 999;
+    overflow-y: auto;
+}
+.sidebar.collapsed {
+    width: 70px;
+}
+.toggle-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
+    padding: 15px;
+    width: 100%;
+    text-align: center;
+}
+.menu {
+    list-style: none;
+    padding: 20px 0;
+}
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    color: white;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: background 0.3s;
+}
+.menu-item:hover {
+    background: #3b536b;
+}
+.menu-icon {
+    font-size: 24px;
+    min-width: 30px;
+    text-align: center;
+}
+.menu-label {
+    margin-left: 15px;
+    transition: opacity 0.3s;
+}
+.sidebar.collapsed .menu-label {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* -------------------- MAIN CONTENT -------------------- */
+.content {
+    margin-left: 250px;
+    padding: 160px 30px 30px;
+    transition: margin-left 0.3s ease;
+    min-height: 100vh;
+}
+.content.shifted {
+    margin-left: 70px;
+}
+.content-body {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* -------------------- DESCRIPTION -------------------- */
+.description {
+    white-space: pre-line;
+    line-height: 1.6;
+    margin: 15px 0;
+}
+.desc .description {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f8f8f8;
+    border-radius: 8px;
+}
+
+/* -------------------- BUTTONS -------------------- */
+.divbutton {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+.button1,
+.button2 {
+    padding: 12px 24px;
+    font-size: 1em;
+    background: transparent;
+    color: #2c3e50;
+    border: 2px solid #2c3e50;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s, transform 0.2s;
+}
+.button1:hover,
+.button2:hover {
+    background: #2c3e50;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* -------------------- CALENDAR NAVIGATION -------------------- */
+.calendar-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+.nav-btn {
+    background: transparent;
+    border: none;
+    font-size: 2em;
+    color: #2c3e50;
+    cursor: pointer;
+    padding: 0 10px;
+    transition: color 0.3s;
+}
+.nav-btn:hover {
+    color: #27ae60;
+}
+
+/* -------------------- EVENTS SECTION -------------------- */
+.months-container {
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    flex: 1;
+    scrollbar-width: none; /* Firefox */
+}
+.months-container::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+}
+.month-column {
+    min-width: 300px;
+    flex: 1;
+    text-align: center;
+    border: 1px solid #000;
+    padding: 15px;
+    border-radius: 5px;
+    background: #fff;
+}
+.month-title {
+    color: #2c3e50;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #27ae60;
+}
+.events-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 15px;
+}
+.event-card {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Limitation de la taille des images */
+.event-card img {
+    display: block;
+    max-width: 100%;
+    max-height: 180px;
+    width: auto;
+    height: auto;
+    object-fit: cover;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.event-date {
+    color: #666;
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+
+/* -------------------- ERROR -------------------- */
+.error {
+    color: #d32f2f;
+    padding: 15px;
+    background: #ffebee;
+    border-radius: 5px;
+}
+
+/* -------------------- RESPONSIVE MOBILE (≤480px) -------------------- */
+@media (max-width: 480px) {
+
+    .header {
+        height: 140px;
+        padding: 15px;
+        overflow-x: auto;
+    }
+
+    .header-buttons {
+        flex-wrap: nowrap;
+        padding-right: 5px;
+    }
+    .header-btn {
+        padding: 6px 15px;
+        font-size: 0.85em;
+    }
+
+    .content {
+        margin-left: 70px;
+        padding: 160px 15px 15px;
+    }
+    .month-column {
+        min-width: 57vw;
+    }
+    .button1, .button2 {
+        padding: 4px 10px;
+        font-size: 0.8rem;
+    }
+
+}
+#calendar-container {
+  display: grid;
+  grid-template-columns: repeat(7,1fr);
+  gap: 2px;
+  padding: 20px;
+  background: #ecf0f1;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+.calendar-day {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  min-height: 80px;
+  position: relative;
+  text-align: right;
+  font-weight: bold;
+  border-radius: 4px;
+}
+.calendar-day.event {
+  background: #f9e79f;
+}
+.calendar-day.event a {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  text-decoration: none;
+  font-size: 1.2em;
+}
