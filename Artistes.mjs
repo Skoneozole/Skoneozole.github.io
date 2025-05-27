@@ -10,21 +10,10 @@ const contentDiv = document.getElementById('content');
 // === Fonctions utilitaires ===
 async function fetchtest(path) {
   try {
-    const username = 'Skoneozole';
-    const repo     = 'testUwULamas';
-    const apiUrl   = `https://api.github.com/repos/${username}/${repo}/contents/${encodeURIComponent(path)}`;
-
-    const response = await fetch(apiUrl, {
-      headers: {
-        Accept: 'application/vnd.github.v3+json'
-      }
-    });
-
+    // On charge désormais depuis le dossier 'infos'
+    const response = await fetch(`infos/${path}`);
     if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-
-    const file    = await response.json();
-    const content = atob(file.content);
-    return JSON.parse(content);
+    return await response.json();
   } catch (error) {
     console.error('Error fetching data:', error);
     return {};
@@ -138,9 +127,11 @@ function renderArtistList() {
   }
   let html = '<div style="display:flex;flex-wrap:wrap;gap:20px;">';
   filteredArtistes.forEach((a, i) => {
+    // Correction du chemin image : infos/image/nom_image.jpg
+    let imagePath = a.image ? `infos/image/${a.image}` : '';
     html += `
       <div class="artist-card" style="flex:1 1 calc(33% - 20px);max-width:calc(33% - 20px);background:#f8f8f8;border-radius:10px;padding:16px;box-shadow:0 2px 8px #0001;display:flex;flex-direction:column;align-items:center;min-width:220px;">
-        <img src="${a.image}" alt="${a['Nom de scene']}" style="width:100px;height:100px;object-fit:cover;border-radius:50%;margin-bottom:10px;">
+        <img src="${imagePath}" alt="${a['Nom de scene']}" style="width:100px;height:100px;object-fit:cover;border-radius:50%;margin-bottom:10px;">
         <h3 style="margin:0 0 6px 0;">${a['Nom de scene'] || a.nom}</h3>
         <div style="font-size:0.95em;color:#666;margin-bottom:8px;">${a.ville || ''}</div>
         <div style="font-size:0.95em;margin-bottom:8px;">${a.desc || ''}</div>
@@ -152,13 +143,95 @@ function renderArtistList() {
   listDiv.innerHTML = html;
 }
 
+// === Carte interactive Leaflet.js ===
+function addMapButton() {
+  if (document.getElementById('artist-map-btn')) return;
+  const btn = document.createElement('button');
+  btn.id = 'artist-map-btn';
+  btn.textContent = 'Afficher la carte des artistes';
+  btn.style = 'margin: 10px auto 20px auto; display: block; background: #304ffe; color: #fff; border: none; border-radius: 6px; padding: 10px 24px; font-size: 1.1em; font-weight: bold; cursor: pointer;';
+  btn.onclick = showArtistMap;
+  contentDiv.prepend(btn);
+}
+
+function showArtistMap() {
+  // Supprime la carte précédente si elle existe
+  let oldMap = document.getElementById('artist-map');
+  if (oldMap) oldMap.remove();
+  const mapDiv = document.createElement('div');
+  mapDiv.id = 'artist-map';
+  mapDiv.style = 'width: 100%; height: 600px; margin-bottom: 30px; border-radius: 12px; overflow: hidden;';
+  contentDiv.prepend(mapDiv);
+
+  // Ajoute Leaflet si pas déjà présent
+  if (!window.L) {
+    const leafletCss = document.createElement('link');
+    leafletCss.rel = 'stylesheet';
+    leafletCss.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+    document.head.appendChild(leafletCss);
+    const leafletJs = document.createElement('script');
+    leafletJs.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    leafletJs.onload = () => renderArtistMap();
+    document.body.appendChild(leafletJs);
+  } else {
+    renderArtistMap();
+  }
+}
+
+function renderArtistMap() {
+  // Centrage France
+  const map = L.map('artist-map').setView([46.6, 2.2], 6);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap',
+    maxZoom: 18,
+  }).addTo(map);
+
+  artistes.forEach(a => {
+    if (!a.lat || !a.lon || !a.image || !a.distance) return;
+    const icon = L.icon({
+      iconUrl: `infos/image/${a.image}`,
+      iconSize: [48, 48],
+      iconAnchor: [24, 24],
+      className: 'artist-map-icon',
+    });
+    const marker = L.marker([a.lat, a.lon], { icon }).addTo(map);
+    marker.bindTooltip(a['Nom de scene'] || a.nom, { direction: 'top', offset: [0, -20] });
+    let circle;
+    marker.on('mouseover', () => {
+      circle = L.circle([a.lat, a.lon], {
+        radius: a.distance * 1000, // km -> m
+        color: '#304ffe',
+        fillColor: '#304ffe33',
+        fillOpacity: 0.25,
+      }).addTo(map);
+    });
+    marker.on('mouseout', () => {
+      if (circle) map.removeLayer(circle);
+    });
+    marker.on('click', () => {
+      L.popup()
+        .setLatLng([a.lat, a.lon])
+        .setContent(`
+          <div style='text-align:center;'>
+            <img src='infos/image/${a.image}' style='width:60px;height:60px;object-fit:cover;border-radius:50%;margin-bottom:8px;'><br>
+            <b>${a['Nom de scene'] || a.nom}</b><br>
+            <span style='color:#666;'>${a.ville || ''}</span><br>
+            <span>Rayon : ${a.distance} km</span>
+          </div>
+        `)
+        .openOn(map);
+    });
+  });
+}
+
 // === Initialisation ===
 async function main() {
   toggleSidebar();
   renderSearchAndFilters();
+  addMapButton();
+  // Charger depuis infos/artiste.json
   const data = await fetchtest('artiste.json');
   artistes = Array.isArray(data.Artiste) ? data.Artiste : [];
-  // Appelle filterAndRender seulement après que la barre et la div liste existent
   setTimeout(() => filterAndRender(), 0);
 }
 
