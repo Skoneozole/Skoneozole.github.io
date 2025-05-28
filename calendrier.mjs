@@ -12,31 +12,23 @@ const monthNames = [
   'Septembre', 'Octobre', 'Novembre', 'Décembre'
 ];
 
-const username = 'Skoneozole';
-const repo     = 'testUwULamas';
-const token    = ''; // facultatif
+
+async function fetchtest(path) {
+  try {
+    const response = await fetch(path);
+    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return {};
+  }
+}
 
 async function fetchEvents() {
   try {
-    const path = 'event.json';
-    const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/${encodeURIComponent(path)}`;
-
-    const response = await fetch(apiUrl, {
-      headers: {
-        Accept: 'application/vnd.github.v3+json'
-      }
-    });
-
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-
-    const file = await response.json();
-    const content = atob(file.content);
-    const data = JSON.parse(content);
-
+    const data = await fetchtest('infos/event.json');
     allEvents = Array.isArray(data.event) ? data.event : [];
-
     renderEverything();
-
   } catch (err) {
     console.error('Erreur chargement events', err);
     calendarContainer.innerHTML = '<p class="error">Erreur de chargement des événements</p>';
@@ -90,8 +82,10 @@ function renderCalendar() {
     wrapper.textContent = d;
 
     if (matched.length) {
-      wrapper.href = RICKROLL;
-      wrapper.target = '_blank';
+      // Lien vers la page FullEvent
+      const eventName = encodeURIComponent(matched[0].nom);
+      wrapper.href = `FullEvent.html?nom=${eventName}`;
+      wrapper.target = '';
       wrapper.classList.add('event');
 
       const popup = document.createElement('div');
@@ -110,7 +104,8 @@ function renderCalendar() {
       popup.appendChild(title);
 
       const image = document.createElement('img');
-      image.src = matched[0].image;
+      // Corrige le chemin pour pointer vers le dossier local infos/image/
+      image.src = 'infos/image/' + matched[0].image.replace(/^.*[\\\/]/, '');
       image.style.width = '100px';
       image.style.height = 'auto';
       image.style.borderRadius = '4px';
@@ -201,7 +196,7 @@ function Events() {
       desc.style.margin = '0';
 
       const image = document.createElement('img');
-      image.src = event.image;
+      image.src = 'infos/image/' + event.image.replace(/^.*[\\\/]/, '');
       image.alt = event.nom;
       image.style.maxWidth = '100%';
       image.style.borderRadius = '6px';
@@ -218,7 +213,7 @@ function Events() {
       card.appendChild(date);
 
       card.addEventListener('click', () => {
-        window.open(RICKROLL, '_blank');
+        window.location.href = `FullEvent.html?nom=${encodeURIComponent(event.nom)}`;
       });
 
       section.appendChild(card);

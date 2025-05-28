@@ -7,16 +7,31 @@
             "fulldesc": "g",
             "image": "https://github.com/Skoneozole/testUwULamas/raw/main/image/e.png",
             "tarif": "5",
-            "site": "non",
             "ville": "Ivry sur Seine",
             "coordonnees": "48.789, 2.384",
             "distance": "100",
             "conta1": "oui",
+            "lien1": "https://www.instagram.com/skoneozole/",
             "conta2": "non",
+            "lien2": "https://www.facebook.com/skoneozole",
             "conta3": "oui",
+            "lien3": "https://www.tiktok.com/@skoneozole",
             "conta4": "non",
+            "lien4": "https://www.youtube.com/@skoneozole",
             "conta5": "oui",
-            "conta6": "non"
+            "lien5": "https://www.snapchat.com/add/skoneozole",
+            "conta6": "non",
+            "lien6": "https://www.twitter.com/skoneozole"
+        },
+        {
+            "nom": "Gregoire",
+            "Nom de scene": "L'oranger",
+            "ville": "Ulis",
+            "tarif": "50",
+            "coordonnees": "48.6817080, 2.1701573",
+            "desc": "je suis un batiste professionnel",
+            "fulldesc": "je suis un acteur compositeur de longue date, j'ai des expérieunce blablabknaknakaoize  pjafeimozndv  f mozF NJ EZF MZ KLFEZ K ZEJ .Z FK E .BJF KLE KRQGJDFB Q   KLF JKEZFBK S<.K VSDN B.ES< .NSEK S<N S.JN SEF  <SJSEN /S KL DS/SF JN<S KJSF R HBFRH  KJ  JK RK JR.KB GR. BRG. BGN.B ERZ.B.NB GR.  ZEFB . ZEF . .BFZEB EZFHBZE KJ ZFE KZEF JKZF KBJEZ FKZEJZE K JKFZE KBZJ KLEB FZK EZ KFZ JBKEFZ KJZFKBSKBFEZ KZEN ?NSDBN FSD. SD .SS N.SDKJBFEJ FE/K FZE/JK ZEFKJ FNEJEF LEFLEZF HZEF F LJZF J",
+            "image": "https://github.com/Skoneozole/testUwULamas/raw/main/infos/image/L'oranger.png"
         }
     ]
 }

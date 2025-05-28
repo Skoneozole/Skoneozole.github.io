@@ -127,14 +127,17 @@ function renderArtistList() {
   }
   let html = '<div style="display:flex;flex-wrap:wrap;gap:20px;">';
   filteredArtistes.forEach((a, i) => {
+    const nomUrl = encodeURIComponent(a['Nom de scene'] || a.nom || '');
     html += `
-      <div class="artist-card" style="flex:1 1 calc(33% - 20px);max-width:calc(33% - 20px);background:#f8f8f8;border-radius:10px;padding:16px;box-shadow:0 2px 8px #0001;display:flex;flex-direction:column;align-items:center;min-width:220px;">
-        <img src="${a.image}" alt="${a['Nom de scene']}" style="width:100px;height:100px;object-fit:cover;border-radius:50%;margin-bottom:10px;">
-        <h3 style="margin:0 0 6px 0;">${a['Nom de scene'] || a.nom}</h3>
-        <div style="font-size:0.95em;color:#666;margin-bottom:8px;">${a.ville || ''}</div>
-        <div style="font-size:0.95em;margin-bottom:8px;">${a.desc || ''}</div>
-        <div style="font-weight:bold;margin-bottom:8px;">Tarif: ${a.tarif ? a.tarif + '€' : 'N.C.'}</div>
-      </div>
+      <a href="FullArtiste.html?nom=${nomUrl}" style="text-decoration:none;color:inherit;flex:1 1 calc(33% - 20px);max-width:calc(33% - 20px);min-width:220px;">
+        <div class="artist-card" style="background:#f8f8f8;border-radius:10px;padding:16px;box-shadow:0 2px 8px #0001;display:flex;flex-direction:column;align-items:center;">
+          <img src="${a.image}" alt="${a['Nom de scene']}" style="width:100px;height:100px;object-fit:cover;border-radius:50%;margin-bottom:10px;">
+          <h3 style="margin:0 0 6px 0;">${a['Nom de scene'] || a.nom}</h3>
+          <div style="font-size:0.95em;color:#666;margin-bottom:8px;">${a.ville || ''}</div>
+          <div style="font-size:0.95em;margin-bottom:8px;">${a.desc || ''}</div>
+          <div style="font-weight:bold;margin-bottom:8px;">Tarif: ${a.tarif ? a.tarif + '€' : 'N.C.'}</div>
+        </div>
+      </a>
     `;
   });
   html += '</div>';

@@ -33,21 +33,9 @@ function toggleSidebar() {
 
 async function fetchtest(path) {
   try {
-    const username = 'Skoneozole';
-    const repo     = 'testUwULamas';
-    const apiUrl   = `https://api.github.com/repos/${username}/${repo}/contents/${encodeURIComponent(path)}`;
-
-    const response = await fetch(apiUrl, {
-      headers: {
-        Accept: 'application/vnd.github.v3+json'
-      }
-    });
-
+    const response = await fetch(path);
     if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-
-    const file    = await response.json();
-    const content = atob(file.content);
-    return JSON.parse(content);
+    return await response.json();
   } catch (error) {
     console.error('Error fetching data:', error);
     return {};
@@ -56,11 +44,10 @@ async function fetchtest(path) {
 
 function fetchEvents() {
   const isMobile = window.innerWidth <= 768;
-
   const scrollY = window.scrollY;
   contentDiv.innerHTML = '';
 
-  fetchtest('event.json').then(data => {
+  fetchtest('infos/event.json').then(data => {
     let monthGroups = isMobile
       ? [{ month: currentMonth, year: currentYear, events: [] }]
       : Array.from({ length: 3 }, (_, i) => {
@@ -101,16 +88,13 @@ function fetchEvents() {
         card.className = 'event-card';
         card.innerHTML = `
           <h3>${event.nom}</h3>
-          <img src="${event.image}" alt="${event.nom}" loading="lazy">
+          <img src="infos/image/${event.image.replace(/^.*[\\\/]/, '')}" alt="${event.nom}" loading="lazy">
           <p class="event-date">${new Date(event.date).toLocaleDateString('fr-FR')}</p>
           <p class="event-desc">${fixEncoding(event.desc || '')}</p>
         `;
-
-        // ✅ rendre toute la carte cliquable
         card.addEventListener('click', () => {
-          window.open(RICKROLL, '_blank');
+          window.location.href = `FullEvent.html?nom=${encodeURIComponent(event.nom)}`;
         });
-
         eventsContainer.appendChild(card);
       });
 
@@ -128,7 +112,7 @@ function fetchEvents() {
 }
 
 function fetchAndDisplayDescription() {
-  fetchtest('desc.json')
+  fetchtest('infos/desc.json')
     .then(data => {
       const descDiv = document.getElementById('desc');
       descDiv.innerHTML = `
