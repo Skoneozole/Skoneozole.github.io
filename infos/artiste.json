@@ -5,35 +5,18 @@
             "Nom de scene": "Skoneozole",
             "desc": "f",
             "fulldesc": "g",
-            "image": "https://github.com/Skoneozole/testUwULamas/raw/main/infos/image/Skoneozole.png",
+            "image": "https://github.com/Skoneozole/testUwULamas/raw/main/image/e.png",
             "tarif": "5",
+            "site": "non",
             "ville": "Ivry sur Seine",
-            "coordonnees": "48.8122302, 2.3872525",
+            "coordonnees": "48.789, 2.384",
             "distance": "100",
             "conta1": "oui",
-            "lien1": "https://www.instagram.com/skoneozole/",
             "conta2": "non",
-            "lien2": "https://www.facebook.com/skoneozole",
             "conta3": "oui",
-            "lien3": "https://www.tiktok.com/@skoneozole",
             "conta4": "non",
-            "lien4": "https://www.youtube.com/@skoneozole",
             "conta5": "oui",
-            "lien5": "https://www.snapchat.com/add/skoneozole",
-            "conta6": "non",
-            "lien6": "https://www.twitter.com/skoneozole"
-        },
-        {
-            "nom": "Gregoire",
-            "Nom de scene": "L'oranger",
-            "ville": "Ulis",
-            "tarif": "50",
-            "coordonnees": "48.6817080, 2.1701573",
-            "desc": "je suis un batiste professionnel",
-            "fulldesc": "Attend **<u><span style='color:#196B24'>attend</span></u>**<span style='color:#196B24'> </span>attend\nLongzhu, elle est trop **<u><span style='color:#215E99;background:yellow;'>BELLE</span></u>**, j’ai jamais vu quelqu’un comme elle",
-            "image": "https://github.com/Skoneozole/testUwULamas/raw/main/infos/image/L'oranger.png",
-            "conta1": "pornhub",
-            "lien1": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            "conta6": "non"
         }
     ]
 }
