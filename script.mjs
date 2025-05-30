@@ -118,7 +118,7 @@ function fetchAndDisplayDescription() {
       descDiv.innerHTML = `
         <h2>${data.titre}</h2>
         <div class="description">
-          ${fixEncoding(data.description).replace(/\n/g, '<br>')}
+          ${markdownToHtml(fixEncoding(data.description || ""))}
         </div>
       `;
     })
@@ -145,5 +145,30 @@ function mois(delta, event) {
 }
 
 function fixEncoding(text) {
-  return decodeURIComponent(escape(text));
+  try {
+    return decodeURIComponent(escape(text));
+  } catch (e) {
+    return text;
+  }
 }
+
+function markdownToHtml(md) {
+  // Titres
+  md = md.replace(/^###### (.*)$/gm, '<h6>$1</h6>');
+  md = md.replace(/^##### (.*)$/gm, '<h5>$1</h5>');
+  md = md.replace(/^#### (.*)$/gm, '<h4>$1</h4>');
+  md = md.replace(/^### (.*)$/gm, '<h3>$1</h3>');
+  md = md.replace(/^## (.*)$/gm, '<h2>$1</h2>');
+  md = md.replace(/^# (.*)$/gm, '<h1>$1</h1>');
+  // Gras fort (****texte****) avec espaces tolérés
+  md = md.replace(/\*\*\*\*\s*([^\*\n]+?)\s*\*\*\*\*/g, '<b>$1</b>');
+  // Gras (**texte**) avec espaces tolérés
+  md = md.replace(/\*\*\s*([^\*\n]+?)\s*\*\*/g, '<b>$1</b>');
+  // Italique (*texte*)
+  md = md.replace(/\*(?!\*)\s*([^\*\n]+?)\s*\*/g, '<i>$1</i>');
+  // (optionnel) Sauts de ligne
+  // md = md.replace(/\n/g, '<br>');
+  return md;
+}
+// REND LA FONCTION GLOBALE POUR LES AUTRES MODULES
+window.markdownToHtml = markdownToHtml;

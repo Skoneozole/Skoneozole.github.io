@@ -60,6 +60,23 @@ async function afficherArtisteCentre() {
     if (contacts.length) {
         contactsHtml = `<div style='display:flex;flex-wrap:wrap;justify-content:center;align-items:center;margin-top:10px;gap:10px;'>${contacts.join('')}</div>`;
     }
+    // Utilise la fonction markdownToHtml globale (script.mjs) si elle existe, sinon fallback
+    const mdToHtml = (window.markdownToHtml || (typeof markdownToHtml === 'function' ? markdownToHtml : function(md) {
+      // Titres
+      md = md.replace(/^###### (.*)$/gm, '<h6>$1</h6>');
+      md = md.replace(/^##### (.*)$/gm, '<h5>$1</h5>');
+      md = md.replace(/^#### (.*)$/gm, '<h4>$1</h4>');
+      md = md.replace(/^### (.*)$/gm, '<h3>$1</h3>');
+      md = md.replace(/^## (.*)$/gm, '<h2>$1</h2>');
+      md = md.replace(/^# (.*)$/gm, '<h1>$1</h1>');
+      // Gras fort (****texte****) avec espaces tolérés
+      md = md.replace(/\*\*\*\*\s*([^\*\n]+?)\s*\*\*\*\*/g, '<b>$1</b>');
+      // Gras (**texte**) avec espaces tolérés
+      md = md.replace(/\*\*\s*([^\*\n]+?)\s*\*\*/g, '<b>$1</b>');
+      // Italique (*texte*)
+      md = md.replace(/\*(?!\*)\s*([^\*\n]+?)\s*\*/g, '<i>$1</i>');
+      return md;
+    }));
     // Affiche au centre
     const content = document.getElementById('content');
     content.innerHTML = `
@@ -68,10 +85,37 @@ async function afficherArtisteCentre() {
         <h1 style="font-size:1.5em;text-align:center;margin-bottom:14px;color:#219a52;">Tarif : ${artiste.tarif ? artiste.tarif + '€' : 'N.C.'}</h1>
         <img src="infos/image/${(artiste.image||'').replace(/^.*[\\\/]/, '')}" alt="${artiste['Nom de scene'] || artiste.nom}" style="max-width:500px;width:100%;border-radius:24px;box-shadow:0 4px 24px #0002;margin-bottom:12px;object-fit:cover;">
         ${contactsHtml}
-        ${artiste.fulldesc ? `<div style='margin-top:28px;max-width:800px;text-align:center;font-size:1.35em;white-space:pre-line;color:#444;'>${artiste.fulldesc}</div>` : ''}
+        ${artiste.fulldesc ? `<div style='margin-top:28px;max-width:800px;text-align:center;font-size:1.35em;'>${mdToHtml(fixEncoding(artiste.fulldesc))}</div>` : ''}
       </div>
     `;
 }
+
+// Correction : ajoute la fonction fixEncoding si elle n'est pas déjà définie (copie de script.mjs)
+function fixEncoding(text) {
+  try {
+    return decodeURIComponent(escape(text));
+  } catch (e) {
+    return text;
+  }
+}
+
+// Correction : importe la fonction markdownToHtml depuis script.mjs si elle existe, sinon version locale minimale
+const mdToHtml = (window.markdownToHtml || (typeof markdownToHtml === 'function' ? markdownToHtml : function(md) {
+  // Titres
+  md = md.replace(/^###### (.*)$/gm, '<h6>$1</h6>');
+  md = md.replace(/^##### (.*)$/gm, '<h5>$1</h5>');
+  md = md.replace(/^#### (.*)$/gm, '<h4>$1</h4>');
+  md = md.replace(/^### (.*)$/gm, '<h3>$1</h3>');
+  md = md.replace(/^## (.*)$/gm, '<h2>$1</h2>');
+  md = md.replace(/^# (.*)$/gm, '<h1>$1</h1>');
+  // Gras fort (****texte****) avec espaces tolérés
+  md = md.replace(/\*\*\*\*\s*([^\*\n]+?)\s*\*\*\*\*/g, '<b>$1</b>');
+  // Gras (**texte**) avec espaces tolérés
+  md = md.replace(/\*\*\s*([^\*\n]+?)\s*\*\*/g, '<b>$1</b>');
+  // Italique (*texte*)
+  md = md.replace(/\*(?!\*)\s*([^\*\n]+?)\s*\*/g, '<i>$1</i>');
+  return md;
+}));
 
 document.addEventListener('DOMContentLoaded', () => {
     afficherArtisteCentre();
