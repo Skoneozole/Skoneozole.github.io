@@ -12,11 +12,17 @@
             "coordonnees": "48.789, 2.384",
             "distance": "100",
             "conta1": "oui",
+            "lien1": "",
             "conta2": "non",
+            "lien2": "",
             "conta3": "oui",
+            "lien3": "",
             "conta4": "non",
+            "lien4": "",
             "conta5": "oui",
-            "conta6": "non"
+            "lien5": "",
+            "conta6": "non",
+            "lien6": ""
         }
     ]
 }
