@@ -36,10 +36,27 @@ function getArtistImageSrc(artiste) {
 function toggleSidebar() {
   const sidebar = document.getElementById('sidebar');
   const content = document.getElementById('content');
+  if (!sidebar || !content) return;
   sidebar.classList.toggle('collapsed');
   content.classList.toggle('shifted');
   const toggleBtn = document.querySelector('.toggle-btn');
-  toggleBtn.textContent = sidebar.classList.contains('collapsed') ? '☰' : '✖';
+  if (toggleBtn) {
+    toggleBtn.textContent = sidebar.classList.contains('collapsed') ? '☰' : '✖';
+  }
+}
+
+// Fix: Ajoute le listener sur le bouton toggle au chargement
+function setupSidebarToggle() {
+  const sidebar = document.getElementById('sidebar');
+  const content = document.getElementById('content');
+  const toggleBtn = document.querySelector('.toggle-btn');
+  if (toggleBtn && sidebar && content) {
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('collapsed');
+      content.classList.toggle('shifted');
+      toggleBtn.textContent = sidebar.classList.contains('collapsed') ? '☰' : '✖';
+    });
+  }
 }
 
 // === Affichage barre de recherche et filtres ===
@@ -345,4 +362,6 @@ function fixSidebarOnMobile() {
   }
 }
 window.addEventListener('resize', fixSidebarOnMobile);
-window.addEventListener('DOMContentLoaded', fixSidebarOnMobile);
+window.addEventListener('DOMContentLoaded', async () => {
+  setupSidebarToggle();
+});
