@@ -8,6 +8,8 @@
   <script type="module" src="contact.mjs" defer></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="icon" type="image/png" href="logo.png">
+  <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
 </head>
 <body>
   <!-- Header -->
@@ -16,9 +18,10 @@
       <img src="logo.png" alt="Logo Écolo Monde" class="header-logo">
     </a>
     <div class="header-content">
-      <div class="header-text">
-        <h2>alcolo monde</h2>
-        <p>Agir aujourd'hui pour boire demain</p>
+      <div class="header-text" style="padding-left:0.5em;">
+        <h2 style="margin:0;display:flex;align-items:center;gap:10px;"></h2>
+        <div class="header-icons" style="display:flex;gap:10px;align-items:center;justify-content:flex-end;"></div>
+        <p></p>
       </div>
       <div class="header-buttons">
         <a href="index.html"    class="header-btn">HOME</a>
@@ -34,7 +37,7 @@
     <button class="toggle-btn">☰</button>
     <ul class="menu">
       <li><a href="event.html"   class="menu-item"><span class="menu-icon">📅</span><span class="menu-label">Calendrier Événements</span></a></li>
-      <li><a href="actions.html" class="menu-item"><span class="menu-icon">🎉</span><span class="menu-label">Événements passés</span></a></li>
+      <li><a href="archive.html" class="menu-item"><span class="menu-icon">🎉</span><span class="menu-label">Événements passés</span></a></li>
       <li><a href="galerie.html" class="menu-item"><span class="menu-icon">📸</span><span class="menu-label">Galerie</span></a></li>
     </ul>
   </nav>
@@ -46,11 +49,16 @@
       <input id="instant-message-name" type="text" placeholder="Nom ou pseudo" style="width:90%;max-width:500px;font-size:1.1em;padding:10px;border-radius:8px;border:1px solid #ccc;margin-bottom:12px;">
       <input id="instant-message-contact" type="text" placeholder="Moyen de contact (mail, Discord, etc.)" style="width:90%;max-width:500px;font-size:1.1em;padding:10px;border-radius:8px;border:1px solid #ccc;margin-bottom:12px;">
       <textarea id="instant-message-text" rows="4" placeholder="Votre message..." style="width:90%;max-width:500px;font-size:1.2em;padding:12px;border-radius:8px;border:1px solid #ccc;margin-bottom:16px;resize:vertical;"></textarea>
+      <div style="margin-bottom:16px;width:90%;max-width:500px;">
+        <!-- hCaptcha widget -->
+        <div id="hcaptcha-container" style="display:flex;justify-content:center;"></div>
+      </div>
       <button id="instant-message-send" style="font-size:1.1em;padding:10px 32px;border-radius:8px;background:#219a52;color:white;border:none;cursor:pointer;">Envoyer</button>
       <div id="instant-message-status" style="margin-top:16px;font-size:1.1em;"></div>
     </div>
     <script type="module">
-      const WEBHOOK_URL = "https://discord.com/api/webhooks/1378004701970169976/bkb9boFJz0swduTsASLBkwDwSlu3WZAxN5QX66_N2NqGxXrnLrl8FSYaYBPhbEjPeVP4";
+      // Remplace l'appel direct au webhook par un appel à ton backend
+      const BACKEND_URL = "https://backend-g73v.onrender.com"; // Mets ici l'URL de ton backend
       const sendBtn = document.getElementById('instant-message-send');
       const textarea = document.getElementById('instant-message-text');
       const nameInput = document.getElementById('instant-message-name');
@@ -65,15 +73,20 @@
           statusDiv.style.color = "#c00";
           return;
         }
+        if (!hcaptchaToken) {
+          statusDiv.textContent = "Merci de valider le captcha avant d'envoyer.";
+          statusDiv.style.color = "#c00";
+          return;
+        }
         sendBtn.disabled = true;
         statusDiv.textContent = "Envoi en cours...";
         statusDiv.style.color = "#444";
         const content = `**Nom/Pseudo :** ${name}\n**Contact :** ${contact}\n**Message :**\n${msg}`;
         try {
-          const res = await fetch(WEBHOOK_URL, {
+          const res = await fetch(BACKEND_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ content })
+            body: JSON.stringify({ message: content, hcaptcha: hcaptchaToken })
           });
           if (res.ok) {
             statusDiv.textContent = "Message envoyé !";
@@ -91,6 +104,87 @@
         }
         sendBtn.disabled = false;
       });
+    </script>
+    <script>
+      // Ferme la sidebar au chargement (comme dans script.mjs)
+      document.addEventListener('DOMContentLoaded', () => {
+        const sidebar = document.getElementById('sidebar');
+        const content = document.getElementById('content');
+        const toggleBtn = document.querySelector('.toggle-btn');
+        sidebar?.classList.add('collapsed');
+        content?.classList.add('shifted');
+        if (toggleBtn) toggleBtn.textContent = '☰';
+        // Ajoute le vrai comportement bouton
+        if (toggleBtn && sidebar && content) {
+          toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+            content.classList.toggle('shifted');
+            toggleBtn.textContent = sidebar.classList.contains('collapsed') ? '☰' : '✖';
+          });
+        }
+      });
+    </script>
+    <script>
+      // Remplace dynamiquement le titre, la description et les icônes du header depuis infos/header.json
+      document.addEventListener('DOMContentLoaded', () => {
+        fetch('infos/header.json')
+          .then(r => r.json())
+          .then(data => {
+            const titre = data.titre || '';
+            const desc = data.description || '';
+            const h2 = document.querySelector('.header-text h2');
+            const p = document.querySelector('.header-text p');
+            if (h2) {
+              h2.innerHTML = '';
+              h2.append(document.createTextNode(titre));
+              // Ajout des deux premières icônes contact dans le même h2
+              if (Array.isArray(data.contacts)) {
+                data.contacts.slice(0,2).forEach(contact => {
+                  if (contact.icone && contact.lien) {
+                    const a = document.createElement('a');
+                    a.href = contact.lien;
+                    a.target = '_blank';
+                    a.rel = 'noopener noreferrer';
+                    a.style.display = 'inline-block';
+                    a.style.marginLeft = '10px';
+                    const img = document.createElement('img');
+                    img.src = contact.icone.replace(/^repo_temp\//, '');
+                    img.alt = contact.nom;
+                    img.title = contact.nom;
+                    img.style.width = '32px';
+                    img.style.height = '32px';
+                    img.style.objectFit = 'contain';
+                    img.style.borderRadius = '50%';
+                    img.style.background = '#fff';
+                    img.style.boxShadow = '0 2px 8px #0002';
+                    a.appendChild(img);
+                    h2.appendChild(a);
+                  }
+                });
+              }
+            }
+            if (p) p.textContent = desc;
+          });
+      });
+    </script>
+    <script>
+      // Mets ici ta vraie clé publique hCaptcha
+      const HCAPTCHA_SITEKEY = "b6365d54-45be-482e-b092-ee4e632ed5c0";
+      let hcaptchaToken = null;
+      // Ajout dynamique du widget hCaptcha
+      window.onload = function() {
+        if (window.hcaptcha) {
+          window.hcaptcha.render('hcaptcha-container', {
+            sitekey: HCAPTCHA_SITEKEY,
+            callback: function(token) { hcaptchaToken = token; },
+            'expired-callback': function() { hcaptchaToken = null; },
+            'error-callback': function() { hcaptchaToken = null; }
+          });
+        } else {
+          // Si hcaptcha pas encore chargé, retente dans 500ms
+          setTimeout(window.onload, 500);
+        }
+      };
     </script>
   </main>
 </body>

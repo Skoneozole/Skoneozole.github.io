@@ -1,25 +1,20 @@
 {
     "event": [
         {
-            "nom": "e",
-            "date": "2025-05-23",
-            "desc": "f",
-            "fulldesc": "g",
-            "image": "https://github.com/Skoneozole/testUwULamas/raw/main/image/e.png"
+            "nom": "tg tg",
+            "date": "2025-06-06",
+            "desc": "rrg",
+            "fulldesc": "rgrg",
+            "image": "https://github.com/Skoneozole/Skoneozole.github.io/raw/main/image/tg_tg.jpg",
+            "img_local": true
         },
         {
-            "nom": "test",
-            "date": "2025-05-29",
-            "desc": "test",
-            "fulldesc": "rfr",
-            "image": "https://github.com/Skoneozole/testUwULamas/raw/main/image/test.png"
-        },
-        {
-            "nom": "tres tres trees tres trees tres long titre oulala c pas une blgague c vraiment long comme titre",
-            "date": "2025-05-27",
-            "desc": "krfnjzvnjzlvnjfeznfklzenfklezfnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn",
-            "fulldesc": "krfnjzvnjzlvnjfeznfklzenfklezfnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\nkrfnjzvnjzlvnjfeznfklzenfklezfnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\nkrfnjzvnjzlvnjfeznfklzenfklezfnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\nkrfnjzvnjzlvnjfeznfklzenfklezfnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\nkrfnjzvnjzlvnjfeznfklzenfklezfnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\nkrfnjzvnjzlvnjfeznfklzenfklezfnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn\nkrfnjzvnjzlvnjfeznfklzenfklezfnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn",
-            "image": "https://github.com/Skoneozole/testUwULamas/raw/main/image/tres_tres_trees_tres_trees_tres_long_titre_oulala_c_pas_une_blgague_c_vraiment_long_comme_titre.png"
+            "nom": "t moche",
+            "date": "2025-06-02",
+            "desc": "",
+            "fulldesc": "",
+            "image": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png",
+            "img_local": false
         }
     ]
 }

@@ -19,6 +19,20 @@ async function fetchtest(path) {
   }
 }
 
+// Retourne le chemin de l'image à afficher selon img_local
+function getArtistImageSrc(artiste) {
+  if (artiste.img_local === true || artiste.img_local === 'true') {
+    // Image locale (dans infos/image/)
+    return 'infos/image/' + (artiste.image || '').replace(/^.*[\\\/]/, '');
+  } else if (artiste.image) {
+    // Image distante (URL)
+    return artiste.image;
+  } else {
+    // Image par défaut
+    return 'infos/image/default.png';
+  }
+}
+
 function toggleSidebar() {
   const sidebar = document.getElementById('sidebar');
   const content = document.getElementById('content');
@@ -128,7 +142,7 @@ function renderArtistList() {
   let html = '<div style="display:flex;flex-wrap:wrap;gap:20px;">';
   filteredArtistes.forEach((a, i) => {
     const nomUrl = encodeURIComponent(a['Nom de scene'] || a.nom || '');
-    const imgSrc = 'infos/image/' + (a.image || '').replace(/^.*[\\\/]/, '');
+    const imgSrc = getArtistImageSrc(a);
     html += `
       <a href="FullArtiste.html?nom=${nomUrl}" style="text-decoration:none;color:inherit;flex:1 1 calc(33% - 20px);max-width:calc(33% - 20px);min-width:220px;">
         <div class="artist-card" style="background:#f8f8f8;border-radius:10px;padding:16px;box-shadow:0 2px 8px #0001;display:flex;flex-direction:column;align-items:center;">
@@ -186,7 +200,7 @@ async function showArtistsOnMap() {
     }
     if (artiste._coords) {
       const icon = L.icon({
-        iconUrl: 'infos/image/' + (artiste.image || '').replace(/^.*[\\\/]/, ''),
+        iconUrl: getArtistImageSrc(artiste),
         iconSize: [48, 48],
         iconAnchor: [24, 24],
         className: 'artist-map-icon'
@@ -312,3 +326,23 @@ async function showArtistsOnMap() {
         window._leafletMap._dblClickHandlerSet = true;
       }
     }
+
+function fixSidebarOnMobile() {
+  const sidebar = document.getElementById('sidebar');
+  if (!sidebar) return;
+  if (window.innerWidth <= 768) {
+    sidebar.style.position = 'fixed';
+    sidebar.style.top = '140px';
+    sidebar.style.left = '0';
+    sidebar.style.height = 'calc(100vh - 140px)';
+    sidebar.style.zIndex = '1000';
+  } else {
+    sidebar.style.position = '';
+    sidebar.style.top = '';
+    sidebar.style.left = '';
+    sidebar.style.height = '';
+    sidebar.style.zIndex = '';
+  }
+}
+window.addEventListener('resize', fixSidebarOnMobile);
+window.addEventListener('DOMContentLoaded', fixSidebarOnMobile);

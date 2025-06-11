@@ -103,9 +103,15 @@ function renderCalendar() {
       title.textContent = matched[0].nom; // ← ← ← TITRE AJOUTÉ ICI
       popup.appendChild(title);
 
+      // Gestion image locale/distante pour le popup
+      let imgSrc = '';
+      if (matched[0].img_local) {
+        imgSrc = 'infos/image/' + matched[0].image.replace(/^.*[\\\/]/, '');
+      } else {
+        imgSrc = matched[0].image;
+      }
       const image = document.createElement('img');
-      // Corrige le chemin pour pointer vers le dossier local infos/image/
-      image.src = 'infos/image/' + matched[0].image.replace(/^.*[\\\/]/, '');
+      image.src = imgSrc;
       image.style.width = '100px';
       image.style.height = 'auto';
       image.style.borderRadius = '4px';
@@ -195,8 +201,15 @@ function Events() {
       desc.textContent = fixEncoding(event.desc || '');
       desc.style.margin = '0';
 
+      // Dans Events() aussi :
+      let imgSrc2 = '';
+      if (event.img_local) {
+        imgSrc2 = 'infos/image/' + event.image.replace(/^.*[\\\/]/, '');
+      } else {
+        imgSrc2 = event.image;
+      }
       const image = document.createElement('img');
-      image.src = 'infos/image/' + event.image.replace(/^.*[\\\/]/, '');
+      image.src = imgSrc2;
       image.alt = event.nom;
       image.style.maxWidth = '100%';
       image.style.borderRadius = '6px';
@@ -283,6 +296,26 @@ function checkMobileAndToggleCalendar() {
     calendarMain.style.display = 'block';
   }
 }
+
+function fixSidebarOnMobile() {
+  const sidebar = document.getElementById('sidebar');
+  if (!sidebar) return;
+  if (window.innerWidth <= 768) {
+    sidebar.style.position = 'fixed';
+    sidebar.style.top = '140px';
+    sidebar.style.left = '0';
+    sidebar.style.height = 'calc(100vh - 140px)';
+    sidebar.style.zIndex = '1000';
+  } else {
+    sidebar.style.position = '';
+    sidebar.style.top = '';
+    sidebar.style.left = '';
+    sidebar.style.height = '';
+    sidebar.style.zIndex = '';
+  }
+}
+window.addEventListener('resize', fixSidebarOnMobile);
+window.addEventListener('DOMContentLoaded', fixSidebarOnMobile);
 
 function renderEverything() {
   renderCalendar();

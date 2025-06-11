@@ -1,0 +1,19 @@
+{
+    "eventImage": [
+        {
+            "nom": "s000.jpg",
+            "desc": "",
+            "lien": "s000.jpg",
+            "local": true,
+            "event": "t moche"
+        }
+    ],
+    "assosImage": [
+        {
+            "nom": "q001.jpg",
+            "desc": "",
+            "lien": "q001.jpg",
+            "local": true
+        }
+    ]
+}

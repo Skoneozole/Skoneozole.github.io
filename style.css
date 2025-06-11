@@ -51,13 +51,14 @@ html {
     height: 100%;
 }
 .header-text h2 {
-    font-size: 1.8em;
+    font-size: 2.2em;
     margin-bottom: 5px;
     color: #2ecc71;
 }
 .header-text p {
     font-size: 0.95em;
     opacity: 0.9;
+    padding-left: 3px;
 }
 .header-buttons {
     display: flex;
@@ -306,6 +307,23 @@ html {
         font-size: 0.8rem;
     }
 
+}
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed !important;
+    top: 140px;
+    left: 0;
+    height: calc(100vh - 140px);
+    z-index: 1000;
+    width: 250px;
+  }
+  .sidebar.collapsed {
+    width: 70px;
+  }
+  .content {
+    margin-left: 70px;
+    padding: 160px 10px 10px;
+  }
 }
 #calendar-container {
   display: grid;

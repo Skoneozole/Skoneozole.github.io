@@ -84,11 +84,17 @@ function fetchEvents() {
       eventsContainer.className = 'events-container';
 
       group.events.forEach(event => {
+        let imgSrc = '';
+        if (event.img_local) {
+          imgSrc = 'infos/image/' + event.image.replace(/^.*[\\\/]/, '');
+        } else {
+          imgSrc = event.image;
+        }
         const card = document.createElement('div');
         card.className = 'event-card';
         card.innerHTML = `
           <h3>${event.nom}</h3>
-          <img src="infos/image/${event.image.replace(/^.*[\\\/]/, '')}" alt="${event.nom}" loading="lazy">
+          <img src="${imgSrc}" alt="${event.nom}" loading="lazy">
           <p class="event-date">${new Date(event.date).toLocaleDateString('fr-FR')}</p>
           <p class="event-desc">${fixEncoding(event.desc || '')}</p>
         `;
@@ -170,5 +176,27 @@ function markdownToHtml(md) {
   // md = md.replace(/\n/g, '<br>');
   return md;
 }
+
+// --- Fixe la sidebar sur mobile lors du scroll ---
+function fixSidebarOnMobile() {
+  const sidebar = document.getElementById('sidebar');
+  if (!sidebar) return;
+  if (window.innerWidth <= 768) {
+    sidebar.style.position = 'fixed';
+    sidebar.style.top = '140px';
+    sidebar.style.left = '0';
+    sidebar.style.height = 'calc(100vh - 140px)';
+    sidebar.style.zIndex = '1000';
+  } else {
+    sidebar.style.position = '';
+    sidebar.style.top = '';
+    sidebar.style.left = '';
+    sidebar.style.height = '';
+    sidebar.style.zIndex = '';
+  }
+}
+window.addEventListener('resize', fixSidebarOnMobile);
+window.addEventListener('DOMContentLoaded', fixSidebarOnMobile);
+
 // REND LA FONCTION GLOBALE POUR LES AUTRES MODULES
 window.markdownToHtml = markdownToHtml;
