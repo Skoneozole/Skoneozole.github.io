@@ -54,7 +54,6 @@ async function afficherEventCentre() {
         <h1 style="font-size:2.2em;text-align:center;margin-bottom:18px;">${event.nom}</h1>
         <img src="${imgSrc}" alt="${event.nom}" style="max-width:340px;width:100%;border-radius:24px;box-shadow:0 4px 24px #0002;margin-bottom:12px;object-fit:cover;">
         <div style='font-size:1.1em;color:#444;margin-bottom:8px;'>${new Date(event.date).toLocaleDateString('fr-FR')}</div>
-        <div style='font-size:1.1em;margin-bottom:10px;'>${mdToHtml(fixEncoding(event.desc || ''))}</div>
         <div style='font-size:1em;max-width:600px;text-align:center;'>${mdToHtml(fixEncoding(event.fulldesc || ''))}</div>
       </div>
     `;
