@@ -17,12 +17,12 @@
             "img_local": true
         },
         {
-            "nom": "test suppr",
+            "nom": "test icone onine",
             "date": "2025-06-12",
             "desc": "",
             "fulldesc": "",
-            "image": "https://github.com/Skoneozole/Skoneozole.github.io/raw/main/image/test_suppr.jpg",
-            "img_local": true
+            "image": "https://cdn-icons-png.freepik.com/256/15707/15707869.png?semt=ais_hybrid",
+            "img_local": false
         }
     ]
 }
