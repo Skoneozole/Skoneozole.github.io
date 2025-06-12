@@ -6,6 +6,13 @@
             "lien": "s000.jpg",
             "local": true,
             "event": "t moche"
+        },
+        {
+            "nom": "o002.jpg",
+            "desc": "",
+            "lien": "o002.jpg",
+            "local": true,
+            "event": "test suppr"
         }
     ],
     "assosImage": [

@@ -1,20 +1,28 @@
 {
     "event": [
         {
-            "nom": "tg tg",
-            "date": "2025-06-06",
-            "desc": "rrg",
-            "fulldesc": "rgrg",
-            "image": "https://github.com/Skoneozole/Skoneozole.github.io/raw/main/image/tg_tg.jpg",
+            "nom": "Ceci est un test passé",
+            "date": "2025-06-12",
+            "desc": "test petite desc",
+            "fulldesc": "test grande desc",
+            "image": "https://github.com/Skoneozole/Skoneozole.github.io/raw/main/image/Ceci_est_un_test_passé.png",
             "img_local": true
         },
         {
-            "nom": "t moche",
-            "date": "2025-06-02",
+            "nom": "Ceci est un test futur",
+            "date": "2025-06-12",
+            "desc": "test future",
+            "fulldesc": "test future",
+            "image": "https://github.com/Skoneozole/Skoneozole.github.io/raw/main/image/Ceci_est_un_test_futur.png",
+            "img_local": true
+        },
+        {
+            "nom": "test suppr",
+            "date": "2025-06-12",
             "desc": "",
             "fulldesc": "",
-            "image": "https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png",
-            "img_local": false
+            "image": "https://github.com/Skoneozole/Skoneozole.github.io/raw/main/image/test_suppr.jpg",
+            "img_local": true
         }
     ]
 }
