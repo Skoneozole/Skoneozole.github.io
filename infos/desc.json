@@ -1,10 +1,22 @@
 {
-  "titre": "Bonjours le test",
-  "description": "test pour zac le bg\n\n*\n\n\nUwU\nUwU\nUwU\nUwU\n\ntg tg tg\n\n\n\n\n\n\n\n\ndsvsdvsdvsd",
+  "titre": "Lamas, une association qui accompagne les artistes",
+  "description": "inserer une description qui sera trop cool",
   "contacts": [
     {
-      "nom": "Site",
-      "lien": "https://skoneozole.github.io/index.html"
+      "nom": "Instagram",
+      "lien": "https://www.instagram.com/lamas_evry/"
+    },
+    {
+      "nom": "Discord",
+      "lien": "https://discord.com/invite/Cux64q7Tt9"
+    },
+    {
+      "nom": "TikTok",
+      "lien": "https://www.tiktok.com/@lamas_evry"
+    },
+    {
+      "nom": "BioLink",
+      "lien": "https://bio.link/associat"
     }
   ]
 }
