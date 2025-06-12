@@ -15,5 +15,18 @@
             "event": "Ceci est un test passé"
         }
     ],
-    "assosImage": []
+    "assosImage": [
+        {
+            "nom": "logo.png",
+            "desc": "",
+            "lien": "logo.png",
+            "local": true
+        },
+        {
+            "nom": "Lamas",
+            "desc": "",
+            "lien": "https://media.istockphoto.com/id/1201041782/fr/photo/alpaga.jpg?s=1024x1024&w=is&k=20&c=Oth7qcKzMtnrXK-1QJDj0XAK-dx9AKY6U5Zv1g6iSww=",
+            "local": false
+        }
+    ]
 }
